@@ -1,0 +1,17 @@
+spec_version: "0.1.0"
+system:
+  name: fresh-supply-erp
+  display: 生鲜供应链 ERP（示例规格）
+  description: 以 YAML 规格驱动建模的生鲜供应链 ERP：基础主数据、采购、销售、库存、配送、结算、溯源与系统管理八大领域。
+  dialect: mysql8
+domains:
+  - base_data
+  - procurement
+  - sales
+  - inventory
+  - delivery
+  - settlement
+  - traceability
+  - system_admin
+rbac_file: rbac.yaml
+workflows_dir: workflows

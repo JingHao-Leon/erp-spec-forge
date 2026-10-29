@@ -1,0 +1,110 @@
+# RBAC 规格：模块（含自定义功能码）+ 角色（授权矩阵）
+# 实体 CRUD 功能码（<entity>_<action>）由生成器按领域自动推导，此处只写自定义功能码。
+modules:
+  - {code: base_data, name: 基础设置, domain: base_data}
+  - code: procurement
+    name: 采购管理
+    domain: procurement
+    functions:
+      - {code: purchase_task_release, name: 发布采购任务}
+      - {code: purchase_task_recall, name: 回收采购任务}
+      - {code: supplier_price_approve, name: 报价单审核}
+  - code: sales
+    name: 销售管理
+    domain: sales
+    functions:
+      - {code: sales_order_audit, name: 订单审核}
+      - {code: sales_order_edit_price, name: 订单改价}
+  - code: inventory
+    name: 库存管理
+    domain: inventory
+    functions:
+      - {code: stock_in_review, name: 入库审核}
+      - {code: stock_out_review, name: 出库审核}
+  - code: delivery
+    name: 配送管理
+    domain: delivery
+    functions:
+      - {code: gps_alarm_handle, name: GPS 报警处理}
+      - {code: route_schedule, name: 路线排班}
+  - code: settlement
+    name: 结算管理
+    domain: settlement
+    functions:
+      - {code: settle_sheet_confirm, name: 对账单确认}
+  - code: traceability
+    name: 溯源管理
+    domain: traceability
+    functions:
+      - {code: inspect_report_upload, name: 上传检测报告}
+      - {code: trace_batch_entry, name: 录入批次号}
+  - {code: system_admin, name: 系统设置, domain: system_admin}
+
+roles:
+  - code: sys_admin
+    name: 系统管理员
+    description: 全部模块
+    grants:
+      base_data: "*"
+      procurement: "*"
+      sales: "*"
+      inventory: "*"
+      delivery: "*"
+      settlement: "*"
+      traceability: "*"
+      system_admin: "*"
+
+  - code: purchase_manager
+    name: 采购主管
+    description: 采购全流程 + 商品档案
+    grants:
+      base_data: "*"
+      procurement: "*"
+
+  - code: purchase_clerk
+    name: 采购文员
+    description: 导单与任务发布，不含报价审核与删除权
+    grants:
+      procurement: [supplier_list, supplier_get, supplier_create, supplier_update, purchase_task_list, purchase_task_get, purchase_task_create, purchase_task_update, purchase_task_release, supplier_price_sheet_list, supplier_price_sheet_get, supplier_price_sheet_create, supplier_price_item_list, purchase_task_item_list, buyer_list, buyer_get, goods_supply_ratio_list]
+
+  - code: sorter
+    name: 分拣员
+    description: 订单查看与分拣
+    grants:
+      sales: [sales_order_list, sales_order_get, sales_order_item_list]
+      inventory: [stock_out_list, stock_out_get, stock_out_item_list]
+
+  - code: warehouse_keeper
+    name: 仓库管理员
+    description: 出入库与盘点
+    grants:
+      inventory: "*"
+      base_data: [goods_list, goods_get, goods_sku_list, unit_list]
+
+  - code: dispatcher
+    name: 配送调度
+    description: 路线排班与 GPS 监控
+    grants:
+      delivery: "*"
+
+  - code: finance
+    name: 财务
+    description: 对账与收款、单据审核
+    grants:
+      settlement: "*"
+      inventory: [stock_in_list, stock_in_get, stock_in_review, stock_out_list, stock_out_get, stock_out_review]
+      sales: [sales_order_list, sales_order_get, sales_order_audit]
+
+  - code: trace_clerk
+    name: 溯源录入员
+    description: 批次与检测报告录入
+    grants:
+      traceability: "*"
+      base_data: [goods_list, goods_get]
+
+  - code: ops_viewer
+    name: 运营查看
+    description: 只读驾驶舱视角
+    grants:
+      sales: [sales_order_list, sales_order_get]
+      settlement: [settle_sheet_list, settle_sheet_get]

@@ -1,0 +1,43 @@
+domain: settlement
+name: 结算管理
+description: 客户对账单、收款与供应商应付。
+entities:
+  - name: settle_sheet
+    display: 对账单
+    fields:
+      - {name: id, type: pk}
+      - {name: sheet_no, type: string, required: true, length: 32}
+      - {name: customer_id, type: fk, target: customer, required: true}
+      - {name: period_start, type: date, required: true, comment: 账期起}
+      - {name: period_end, type: date, required: true, comment: 账期止}
+      - {name: total_amount, type: decimal, precision: "12,2", default: 0}
+      - {name: status, type: enum, values: [draft, confirmed, partial_paid, paid], default: draft}
+
+  - name: settle_item
+    display: 对账明细
+    fields:
+      - {name: id, type: pk}
+      - {name: sheet_id, type: fk, target: settle_sheet, required: true}
+      - {name: order_id, type: fk, target: sales_order, required: true}
+      - {name: amount, type: decimal, precision: "12,2", required: true}
+
+  - name: payment_record
+    display: 收款记录
+    fields:
+      - {name: id, type: pk}
+      - {name: customer_id, type: fk, target: customer, required: true}
+      - {name: settle_sheet_id, type: fk, target: settle_sheet, comment: 关联对账单}
+      - {name: amount, type: decimal, precision: "12,2", required: true}
+      - {name: pay_method, type: enum, values: [cash, bank, wechat, alipay], default: bank}
+      - {name: pay_time, type: datetime}
+      - {name: status, type: enum, values: [pending, success, failed], default: pending}
+
+  - name: supplier_payable
+    display: 供应商应付
+    fields:
+      - {name: id, type: pk}
+      - {name: supplier_id, type: fk, target: supplier, required: true}
+      - {name: period_start, type: date, required: true}
+      - {name: period_end, type: date, required: true}
+      - {name: amount, type: decimal, precision: "12,2", default: 0}
+      - {name: status, type: enum, values: [open, paid], default: open}

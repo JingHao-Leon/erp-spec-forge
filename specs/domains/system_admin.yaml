@@ -1,0 +1,67 @@
+domain: system_admin
+name: 系统管理
+description: 管理员、模块/功能注册表、角色、系统参数与操作日志。
+entities:
+  - name: admin_user
+    display: 管理员
+    fields:
+      - {name: id, type: pk}
+      - {name: username, type: string, required: true, length: 64, comment: 登录名（手机号/账号）}
+      - {name: name, type: string, length: 64, comment: 姓名}
+      - {name: phone, type: string, length: 32}
+      - {name: password_hash, type: string, required: true, length: 128, comment: 口令哈希（bcrypt/argon2）}
+      - {name: role_id, type: fk, target: sys_role, required: true}
+      - {name: status, type: enum, values: [active, disabled], default: active}
+      - {name: created_by, type: string, length: 64, comment: 创建人}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: sys_module
+    display: 功能模块
+    fields:
+      - {name: id, type: pk}
+      - {name: code, type: string, required: true, length: 64, comment: 模块代码}
+      - {name: name, type: string, required: true, length: 64}
+      - {name: parent_id, type: fk, target: sys_module, comment: 父级模块}
+      - {name: sort, type: int, default: 0}
+
+  - name: sys_function
+    display: 功能点
+    fields:
+      - {name: id, type: pk}
+      - {name: module_id, type: fk, target: sys_module, required: true}
+      - {name: code, type: string, required: true, length: 64, comment: 功能码}
+      - {name: name, type: string, required: true, length: 64}
+
+  - name: sys_role
+    display: 角色
+    fields:
+      - {name: id, type: pk}
+      - {name: code, type: string, required: true, length: 64}
+      - {name: name, type: string, required: true, length: 64}
+      - {name: descr, type: string, length: 255}
+
+  - name: sys_role_grant
+    display: 角色授权
+    fields:
+      - {name: id, type: pk}
+      - {name: role_id, type: fk, target: sys_role, required: true}
+      - {name: function_code, type: string, required: true, length: 64, comment: 授权的功能码}
+
+  - name: sys_config
+    display: 系统参数
+    fields:
+      - {name: id, type: pk}
+      - {name: config_key, type: string, required: true, length: 64, comment: 参数键}
+      - {name: config_value, type: string, length: 255, comment: 参数值（敏感值须加密存储）}
+      - {name: description, type: string, length: 255}
+
+  - name: operation_log
+    display: 操作日志
+    fields:
+      - {name: id, type: pk}
+      - {name: user_id, type: fk, target: admin_user, required: true}
+      - {name: action, type: string, required: true, length: 64, comment: 动作，如 login/update/delete}
+      - {name: target_table, type: string, length: 64}
+      - {name: target_id, type: string, length: 64}
+      - {name: detail_json, type: json, comment: 变更前后快照}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}

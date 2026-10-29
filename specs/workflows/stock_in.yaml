@@ -1,0 +1,14 @@
+workflow: stock_in_review
+entity: stock_in
+display: 入库单审核流
+initial: draft
+states:
+  - {name: draft, display: 草稿}
+  - {name: pending_review, display: 待审核}
+  - {name: posted, display: 已过账, final: true}
+  - {name: rejected, display: 已驳回}
+transitions:
+  - {from: draft, to: pending_review, event: submit}
+  - {from: pending_review, to: posted, event: review_pass, role: warehouse_keeper}
+  - {from: pending_review, to: rejected, event: review_reject, role: warehouse_keeper}
+  - {from: rejected, to: draft, event: rework}

@@ -1,0 +1,74 @@
+domain: delivery
+name: 配送管理
+description: 路线、承运商、司机、GPS 冷链设备与配送执行记录。
+entities:
+  - name: carrier
+    display: 承运商
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 128}
+      - {name: phone, type: string, length: 32}
+      - {name: status, type: enum, values: [normal, locked], default: normal}
+
+  - name: driver
+    display: 司机
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 64}
+      - {name: phone, type: string, required: true, length: 32}
+      - {name: carrier_id, type: fk, target: carrier, required: true}
+      - {name: id_card_no, type: string, length: 32, comment: 身份证号（加密存储）}
+      - {name: status, type: enum, values: [normal, locked], default: normal}
+
+  - name: route
+    display: 配送路线
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 64}
+      - {name: route_type, type: enum, values: [breakfast, vegetable, meat, dry], default: vegetable}
+      - {name: carrier_id, type: fk, target: carrier, required: true}
+      - {name: distance_km, type: decimal, precision: "8,2", comment: 路线里程}
+      - {name: status, type: enum, values: [normal, locked], default: normal}
+
+  - name: route_bind
+    display: 路线绑定
+    comment: 路线 × 客户 × 司机 × 车辆 × GPS 的排班绑定
+    fields:
+      - {name: id, type: pk}
+      - {name: route_id, type: fk, target: route, required: true}
+      - {name: customer_id, type: fk, target: customer, required: true}
+      - {name: driver_id, type: fk, target: driver, required: true}
+      - {name: vehicle_no, type: string, length: 16, comment: 车牌号}
+      - {name: gps_device_id, type: fk, target: gps_device, comment: 绑定 GPS 设备}
+      - {name: sort, type: int, default: 0, comment: 送达顺序}
+
+  - name: gps_device
+    display: GPS 设备
+    fields:
+      - {name: id, type: pk}
+      - {name: device_no, type: string, required: true, length: 32, comment: 设备号}
+      - {name: plate_no, type: string, length: 16, comment: 绑定车牌}
+      - {name: device_status, type: enum, values: [normal, offline, disabled], default: normal}
+      - {name: last_login_time, type: datetime}
+
+  - name: gps_alarm
+    display: GPS 报警
+    fields:
+      - {name: id, type: pk}
+      - {name: device_id, type: fk, target: gps_device, required: true}
+      - {name: alarm_type, type: enum, values: [track_deviation, temperature, late, out_of_area, into_forbidden], required: true}
+      - {name: alarm_date, type: date, required: true}
+      - {name: content, type: string, length: 255, comment: 报警内容}
+      - {name: handled, type: bool, default: 0}
+
+  - name: delivery_record
+    display: 配送执行记录
+    fields:
+      - {name: id, type: pk}
+      - {name: route_id, type: fk, target: route, required: true}
+      - {name: delivery_date, type: date, required: true}
+      - {name: customer_id, type: fk, target: customer, required: true}
+      - {name: driver_id, type: fk, target: driver, required: true}
+      - {name: arrive_time, type: datetime, comment: 送达时间}
+      - {name: mileage_km, type: decimal, precision: "8,2", comment: 本段里程}
+      - {name: sign_status, type: enum, values: [pending, signed, refused], default: pending}

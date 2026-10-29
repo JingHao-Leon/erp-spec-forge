@@ -1,0 +1,35 @@
+domain: traceability
+name: 溯源管理
+description: 食品安全溯源：批次、检测报告与公开扫码页配置。
+entities:
+  - name: trace_batch
+    display: 溯源批次
+    fields:
+      - {name: id, type: pk}
+      - {name: batch_no, type: string, required: true, length: 64, comment: 批次号}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: supplier_id, type: fk, target: supplier, required: true}
+      - {name: production_date, type: date, comment: 生产/采摘日期}
+      - {name: in_date, type: date, comment: 入库日期}
+      - {name: source_place, type: string, length: 128, comment: 产地}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: inspect_report
+    display: 检测报告
+    fields:
+      - {name: id, type: pk}
+      - {name: report_no, type: string, required: true, length: 64}
+      - {name: batch_id, type: fk, target: trace_batch, required: true}
+      - {name: report_date, type: date, required: true}
+      - {name: result, type: enum, values: [pending, pass, fail], default: pending}
+      - {name: items_json, type: json, comment: 检测项与数值}
+      - {name: report_images, type: json, comment: 报告图片 URL 列表}
+
+  - name: trace_setting
+    display: 溯源公开页设置
+    fields:
+      - {name: id, type: pk}
+      - {name: show_client, type: bool, default: 1, comment: 公开页是否展示客户}
+      - {name: show_buy_num, type: bool, default: 0, comment: 是否展示购买数量}
+      - {name: show_node_time, type: bool, default: 1, comment: 是否展示流转时间}
+      - {name: qr_prefix, type: string, length: 128, comment: 扫码页 URL 前缀}

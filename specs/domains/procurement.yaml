@@ -1,0 +1,87 @@
+domain: procurement
+name: 采购管理
+description: 供应商、采购员、报价与采购任务/单据的完整采购链路。
+entities:
+  - name: supplier
+    display: 供应商
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 128, comment: 供应商名称}
+      - {name: contact_name, type: string, length: 64}
+      - {name: contact_phone, type: string, length: 32}
+      - {name: address, type: string, length: 255}
+      - {name: settle_type, type: enum, values: [month, half_month, cash], default: month, comment: 结算周期}
+      - {name: status, type: enum, values: [normal, locked], default: normal, comment: 启用/禁用}
+      - {name: lock_operator, type: string, length: 64, comment: 禁用操作人}
+      - {name: lock_time, type: datetime, comment: 禁用时间}
+      - {name: remark, type: string, length: 255}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: buyer
+    display: 采购员
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 64}
+      - {name: phone, type: string, length: 32}
+      - {name: group_tag, type: enum, values: [fresh, dry], default: fresh, comment: 生鲜组/干货组}
+      - {name: status, type: enum, values: [normal, locked], default: normal}
+
+  - name: supplier_goods
+    display: 供应商-商品绑定
+    fields:
+      - {name: id, type: pk}
+      - {name: supplier_id, type: fk, target: supplier, required: true}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: supply_price, type: decimal, precision: "12,2", comment: 供货价}
+      - {name: is_primary, type: bool, default: 0, comment: 是否主供应商}
+
+  - name: supplier_price_sheet
+    display: 供应商报价单
+    fields:
+      - {name: id, type: pk}
+      - {name: sheet_no, type: string, required: true, length: 32, comment: 报价单号}
+      - {name: supplier_id, type: fk, target: supplier, required: true}
+      - {name: sheet_date, type: date, required: true, comment: 报价日期}
+      - {name: status, type: enum, values: [draft, submitted, approved, rejected], default: draft}
+
+  - name: supplier_price_item
+    display: 报价明细
+    fields:
+      - {name: id, type: pk}
+      - {name: sheet_id, type: fk, target: supplier_price_sheet, required: true}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: price, type: decimal, precision: "12,2", required: true}
+
+  - name: purchase_task
+    display: 采购任务
+    fields:
+      - {name: id, type: pk}
+      - {name: task_no, type: string, required: true, length: 32, comment: 任务单号}
+      - {name: delivery_date, type: date, required: true, comment: 配送日期}
+      - {name: task_type, type: enum, values: [fresh, dry], default: fresh, comment: 生鲜/干货导单流程}
+      - {name: status, type: enum, values: [draft, released, executing, completed, cancelled], default: draft, comment: 生命周期见 workflow}
+      - {name: released_at, type: datetime, comment: 发布时间}
+      - {name: released_by, type: string, length: 64}
+      - {name: remark, type: string, length: 255}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: purchase_task_item
+    display: 采购任务明细
+    fields:
+      - {name: id, type: pk}
+      - {name: task_id, type: fk, target: purchase_task, required: true}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: plan_qty, type: decimal, precision: "12,2", comment: 需求数量（汇总自销售订单）}
+      - {name: actual_qty, type: decimal, precision: "12,2", comment: 实采数量}
+      - {name: supplier_id, type: fk, target: supplier, comment: 指定供应商}
+      - {name: buyer_id, type: fk, target: buyer, comment: 指定采购员}
+      - {name: purchase_remark, type: string, length: 255, comment: 采购说明/加工要求}
+
+  - name: goods_supply_ratio
+    display: 供应商比例分配
+    fields:
+      - {name: id, type: pk}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: supplier_id, type: fk, target: supplier, required: true}
+      - {name: delivery_date, type: date, required: true, comment: 生效配送日期}
+      - {name: ratio, type: decimal, precision: "5,2", required: true, comment: 分配百分比}

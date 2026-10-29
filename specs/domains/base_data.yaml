@@ -1,0 +1,60 @@
+domain: base_data
+name: 基础主数据
+description: 商品、分类、单位、税率、区域等全系统共用的主数据。
+entities:
+  - name: goods_category
+    display: 商品分类
+    comment: 支持三级树形分类
+    fields:
+      - {name: id, type: pk}
+      - {name: parent_id, type: fk, target: goods_category, comment: 上级分类，一级分类为空}
+      - {name: level, type: int, required: true, comment: 层级 1/2/3}
+      - {name: name, type: string, required: true, length: 64, comment: 分类名称}
+      - {name: sort, type: int, default: 0, comment: 排序号}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: unit
+    display: 计量单位
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 32, comment: 单位名称，如 斤/箱/份}
+      - {name: sort, type: int, default: 0}
+
+  - name: tax_rate
+    display: 税率
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 64, comment: 税率名称}
+      - {name: rate, type: decimal, precision: "5,2", required: true, comment: 百分比数值}
+
+  - name: goods
+    display: 商品（SPU）
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 128, comment: 商品名称}
+      - {name: category_id, type: fk, target: goods_category, required: true}
+      - {name: unit_id, type: fk, target: unit, required: true}
+      - {name: tax_rate_id, type: fk, target: tax_rate, comment: 适用税率}
+      - {name: alias, type: string, length: 128, comment: 别名，用于客户下单时匹配}
+      - {name: spec, type: string, length: 64, comment: 规格，如 500g/袋}
+      - {name: status, type: enum, values: [normal, stopped], default: normal, comment: 启用状态}
+      - {name: remark, type: string, length: 255}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: goods_sku
+    display: 商品 SKU
+    fields:
+      - {name: id, type: pk}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: sku_name, type: string, required: true, length: 128, comment: SKU 名称}
+      - {name: barcode, type: string, length: 64, comment: 条码}
+      - {name: price, type: decimal, precision: "12,2", comment: 参考售价}
+      - {name: status, type: enum, values: [normal, stopped], default: normal}
+
+  - name: region
+    display: 区域
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 64}
+      - {name: parent_id, type: fk, target: region, comment: 上级区域}
+      - {name: sort, type: int, default: 0}

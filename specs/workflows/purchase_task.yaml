@@ -1,0 +1,17 @@
+workflow: purchase_task_lifecycle
+entity: purchase_task
+display: 采购任务生命周期
+initial: draft
+states:
+  - {name: draft, display: 草稿}
+  - {name: released, display: 已发布}
+  - {name: executing, display: 采购执行中}
+  - {name: completed, display: 已完成, final: true}
+  - {name: cancelled, display: 已作废, final: true}
+transitions:
+  - {from: draft, to: released, event: release, role: purchase_clerk, guard: 明细非空}
+  - {from: released, to: draft, event: recall, role: purchase_clerk}
+  - {from: released, to: executing, event: start}
+  - {from: executing, to: completed, event: complete, guard: 全部明细有实采数量}
+  - {from: draft, to: cancelled, event: cancel}
+  - {from: released, to: cancelled, event: cancel}

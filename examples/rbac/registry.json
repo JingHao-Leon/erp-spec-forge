@@ -1,0 +1,1078 @@
+{
+  "system": "fresh-supply-erp",
+  "display": "生鲜供应链 ERP（示例规格）",
+  "spec_version": "0.1.0",
+  "modules": [
+    {
+      "code": "base_data",
+      "name": "基础设置",
+      "domain": "base_data",
+      "functions": [
+        {
+          "code": "goods_category_list",
+          "name": "商品分类·list"
+        },
+        {
+          "code": "goods_category_get",
+          "name": "商品分类·get"
+        },
+        {
+          "code": "goods_category_create",
+          "name": "商品分类·create"
+        },
+        {
+          "code": "goods_category_update",
+          "name": "商品分类·update"
+        },
+        {
+          "code": "goods_category_delete",
+          "name": "商品分类·delete"
+        },
+        {
+          "code": "unit_list",
+          "name": "计量单位·list"
+        },
+        {
+          "code": "unit_get",
+          "name": "计量单位·get"
+        },
+        {
+          "code": "unit_create",
+          "name": "计量单位·create"
+        },
+        {
+          "code": "unit_update",
+          "name": "计量单位·update"
+        },
+        {
+          "code": "unit_delete",
+          "name": "计量单位·delete"
+        },
+        {
+          "code": "tax_rate_list",
+          "name": "税率·list"
+        },
+        {
+          "code": "tax_rate_get",
+          "name": "税率·get"
+        },
+        {
+          "code": "tax_rate_create",
+          "name": "税率·create"
+        },
+        {
+          "code": "tax_rate_update",
+          "name": "税率·update"
+        },
+        {
+          "code": "tax_rate_delete",
+          "name": "税率·delete"
+        },
+        {
+          "code": "goods_list",
+          "name": "商品（SPU）·list"
+        },
+        {
+          "code": "goods_get",
+          "name": "商品（SPU）·get"
+        },
+        {
+          "code": "goods_create",
+          "name": "商品（SPU）·create"
+        },
+        {
+          "code": "goods_update",
+          "name": "商品（SPU）·update"
+        },
+        {
+          "code": "goods_delete",
+          "name": "商品（SPU）·delete"
+        },
+        {
+          "code": "goods_sku_list",
+          "name": "商品 SKU·list"
+        },
+        {
+          "code": "goods_sku_get",
+          "name": "商品 SKU·get"
+        },
+        {
+          "code": "goods_sku_create",
+          "name": "商品 SKU·create"
+        },
+        {
+          "code": "goods_sku_update",
+          "name": "商品 SKU·update"
+        },
+        {
+          "code": "goods_sku_delete",
+          "name": "商品 SKU·delete"
+        },
+        {
+          "code": "region_list",
+          "name": "区域·list"
+        },
+        {
+          "code": "region_get",
+          "name": "区域·get"
+        },
+        {
+          "code": "region_create",
+          "name": "区域·create"
+        },
+        {
+          "code": "region_update",
+          "name": "区域·update"
+        },
+        {
+          "code": "region_delete",
+          "name": "区域·delete"
+        }
+      ]
+    },
+    {
+      "code": "procurement",
+      "name": "采购管理",
+      "domain": "procurement",
+      "functions": [
+        {
+          "code": "purchase_task_release",
+          "name": "发布采购任务"
+        },
+        {
+          "code": "purchase_task_recall",
+          "name": "回收采购任务"
+        },
+        {
+          "code": "supplier_price_approve",
+          "name": "报价单审核"
+        },
+        {
+          "code": "supplier_list",
+          "name": "供应商·list"
+        },
+        {
+          "code": "supplier_get",
+          "name": "供应商·get"
+        },
+        {
+          "code": "supplier_create",
+          "name": "供应商·create"
+        },
+        {
+          "code": "supplier_update",
+          "name": "供应商·update"
+        },
+        {
+          "code": "supplier_delete",
+          "name": "供应商·delete"
+        },
+        {
+          "code": "buyer_list",
+          "name": "采购员·list"
+        },
+        {
+          "code": "buyer_get",
+          "name": "采购员·get"
+        },
+        {
+          "code": "buyer_create",
+          "name": "采购员·create"
+        },
+        {
+          "code": "buyer_update",
+          "name": "采购员·update"
+        },
+        {
+          "code": "buyer_delete",
+          "name": "采购员·delete"
+        },
+        {
+          "code": "supplier_goods_list",
+          "name": "供应商-商品绑定·list"
+        },
+        {
+          "code": "supplier_goods_get",
+          "name": "供应商-商品绑定·get"
+        },
+        {
+          "code": "supplier_goods_create",
+          "name": "供应商-商品绑定·create"
+        },
+        {
+          "code": "supplier_goods_update",
+          "name": "供应商-商品绑定·update"
+        },
+        {
+          "code": "supplier_goods_delete",
+          "name": "供应商-商品绑定·delete"
+        },
+        {
+          "code": "supplier_price_sheet_list",
+          "name": "供应商报价单·list"
+        },
+        {
+          "code": "supplier_price_sheet_get",
+          "name": "供应商报价单·get"
+        },
+        {
+          "code": "supplier_price_sheet_create",
+          "name": "供应商报价单·create"
+        },
+        {
+          "code": "supplier_price_sheet_update",
+          "name": "供应商报价单·update"
+        },
+        {
+          "code": "supplier_price_sheet_delete",
+          "name": "供应商报价单·delete"
+        },
+        {
+          "code": "supplier_price_item_list",
+          "name": "报价明细·list"
+        },
+        {
+          "code": "supplier_price_item_get",
+          "name": "报价明细·get"
+        },
+        {
+          "code": "supplier_price_item_create",
+          "name": "报价明细·create"
+        },
+        {
+          "code": "supplier_price_item_update",
+          "name": "报价明细·update"
+        },
+        {
+          "code": "supplier_price_item_delete",
+          "name": "报价明细·delete"
+        },
+        {
+          "code": "purchase_task_list",
+          "name": "采购任务·list"
+        },
+        {
+          "code": "purchase_task_get",
+          "name": "采购任务·get"
+        },
+        {
+          "code": "purchase_task_create",
+          "name": "采购任务·create"
+        },
+        {
+          "code": "purchase_task_update",
+          "name": "采购任务·update"
+        },
+        {
+          "code": "purchase_task_delete",
+          "name": "采购任务·delete"
+        },
+        {
+          "code": "purchase_task_item_list",
+          "name": "采购任务明细·list"
+        },
+        {
+          "code": "purchase_task_item_get",
+          "name": "采购任务明细·get"
+        },
+        {
+          "code": "purchase_task_item_create",
+          "name": "采购任务明细·create"
+        },
+        {
+          "code": "purchase_task_item_update",
+          "name": "采购任务明细·update"
+        },
+        {
+          "code": "purchase_task_item_delete",
+          "name": "采购任务明细·delete"
+        },
+        {
+          "code": "goods_supply_ratio_list",
+          "name": "供应商比例分配·list"
+        },
+        {
+          "code": "goods_supply_ratio_get",
+          "name": "供应商比例分配·get"
+        },
+        {
+          "code": "goods_supply_ratio_create",
+          "name": "供应商比例分配·create"
+        },
+        {
+          "code": "goods_supply_ratio_update",
+          "name": "供应商比例分配·update"
+        },
+        {
+          "code": "goods_supply_ratio_delete",
+          "name": "供应商比例分配·delete"
+        }
+      ]
+    },
+    {
+      "code": "sales",
+      "name": "销售管理",
+      "domain": "sales",
+      "functions": [
+        {
+          "code": "sales_order_audit",
+          "name": "订单审核"
+        },
+        {
+          "code": "sales_order_edit_price",
+          "name": "订单改价"
+        },
+        {
+          "code": "customer_list",
+          "name": "客户·list"
+        },
+        {
+          "code": "customer_get",
+          "name": "客户·get"
+        },
+        {
+          "code": "customer_create",
+          "name": "客户·create"
+        },
+        {
+          "code": "customer_update",
+          "name": "客户·update"
+        },
+        {
+          "code": "customer_delete",
+          "name": "客户·delete"
+        },
+        {
+          "code": "sales_order_list",
+          "name": "销售订单·list"
+        },
+        {
+          "code": "sales_order_get",
+          "name": "销售订单·get"
+        },
+        {
+          "code": "sales_order_create",
+          "name": "销售订单·create"
+        },
+        {
+          "code": "sales_order_update",
+          "name": "销售订单·update"
+        },
+        {
+          "code": "sales_order_delete",
+          "name": "销售订单·delete"
+        },
+        {
+          "code": "sales_order_item_list",
+          "name": "订单明细·list"
+        },
+        {
+          "code": "sales_order_item_get",
+          "name": "订单明细·get"
+        },
+        {
+          "code": "sales_order_item_create",
+          "name": "订单明细·create"
+        },
+        {
+          "code": "sales_order_item_update",
+          "name": "订单明细·update"
+        },
+        {
+          "code": "sales_order_item_delete",
+          "name": "订单明细·delete"
+        }
+      ]
+    },
+    {
+      "code": "inventory",
+      "name": "库存管理",
+      "domain": "inventory",
+      "functions": [
+        {
+          "code": "stock_in_review",
+          "name": "入库审核"
+        },
+        {
+          "code": "stock_out_review",
+          "name": "出库审核"
+        },
+        {
+          "code": "warehouse_list",
+          "name": "仓库·list"
+        },
+        {
+          "code": "warehouse_get",
+          "name": "仓库·get"
+        },
+        {
+          "code": "warehouse_create",
+          "name": "仓库·create"
+        },
+        {
+          "code": "warehouse_update",
+          "name": "仓库·update"
+        },
+        {
+          "code": "warehouse_delete",
+          "name": "仓库·delete"
+        },
+        {
+          "code": "stock_in_list",
+          "name": "入库单·list"
+        },
+        {
+          "code": "stock_in_get",
+          "name": "入库单·get"
+        },
+        {
+          "code": "stock_in_create",
+          "name": "入库单·create"
+        },
+        {
+          "code": "stock_in_update",
+          "name": "入库单·update"
+        },
+        {
+          "code": "stock_in_delete",
+          "name": "入库单·delete"
+        },
+        {
+          "code": "stock_in_item_list",
+          "name": "入库明细·list"
+        },
+        {
+          "code": "stock_in_item_get",
+          "name": "入库明细·get"
+        },
+        {
+          "code": "stock_in_item_create",
+          "name": "入库明细·create"
+        },
+        {
+          "code": "stock_in_item_update",
+          "name": "入库明细·update"
+        },
+        {
+          "code": "stock_in_item_delete",
+          "name": "入库明细·delete"
+        },
+        {
+          "code": "stock_out_list",
+          "name": "出库单·list"
+        },
+        {
+          "code": "stock_out_get",
+          "name": "出库单·get"
+        },
+        {
+          "code": "stock_out_create",
+          "name": "出库单·create"
+        },
+        {
+          "code": "stock_out_update",
+          "name": "出库单·update"
+        },
+        {
+          "code": "stock_out_delete",
+          "name": "出库单·delete"
+        },
+        {
+          "code": "stock_out_item_list",
+          "name": "出库明细·list"
+        },
+        {
+          "code": "stock_out_item_get",
+          "name": "出库明细·get"
+        },
+        {
+          "code": "stock_out_item_create",
+          "name": "出库明细·create"
+        },
+        {
+          "code": "stock_out_item_update",
+          "name": "出库明细·update"
+        },
+        {
+          "code": "stock_out_item_delete",
+          "name": "出库明细·delete"
+        },
+        {
+          "code": "stocktake_list",
+          "name": "盘点单·list"
+        },
+        {
+          "code": "stocktake_get",
+          "name": "盘点单·get"
+        },
+        {
+          "code": "stocktake_create",
+          "name": "盘点单·create"
+        },
+        {
+          "code": "stocktake_update",
+          "name": "盘点单·update"
+        },
+        {
+          "code": "stocktake_delete",
+          "name": "盘点单·delete"
+        },
+        {
+          "code": "stocktake_item_list",
+          "name": "盘点明细·list"
+        },
+        {
+          "code": "stocktake_item_get",
+          "name": "盘点明细·get"
+        },
+        {
+          "code": "stocktake_item_create",
+          "name": "盘点明细·create"
+        },
+        {
+          "code": "stocktake_item_update",
+          "name": "盘点明细·update"
+        },
+        {
+          "code": "stocktake_item_delete",
+          "name": "盘点明细·delete"
+        },
+        {
+          "code": "stock_adjust_list",
+          "name": "库存调整·list"
+        },
+        {
+          "code": "stock_adjust_get",
+          "name": "库存调整·get"
+        },
+        {
+          "code": "stock_adjust_create",
+          "name": "库存调整·create"
+        },
+        {
+          "code": "stock_adjust_update",
+          "name": "库存调整·update"
+        },
+        {
+          "code": "stock_adjust_delete",
+          "name": "库存调整·delete"
+        }
+      ]
+    },
+    {
+      "code": "delivery",
+      "name": "配送管理",
+      "domain": "delivery",
+      "functions": [
+        {
+          "code": "gps_alarm_handle",
+          "name": "GPS 报警处理"
+        },
+        {
+          "code": "route_schedule",
+          "name": "路线排班"
+        },
+        {
+          "code": "carrier_list",
+          "name": "承运商·list"
+        },
+        {
+          "code": "carrier_get",
+          "name": "承运商·get"
+        },
+        {
+          "code": "carrier_create",
+          "name": "承运商·create"
+        },
+        {
+          "code": "carrier_update",
+          "name": "承运商·update"
+        },
+        {
+          "code": "carrier_delete",
+          "name": "承运商·delete"
+        },
+        {
+          "code": "driver_list",
+          "name": "司机·list"
+        },
+        {
+          "code": "driver_get",
+          "name": "司机·get"
+        },
+        {
+          "code": "driver_create",
+          "name": "司机·create"
+        },
+        {
+          "code": "driver_update",
+          "name": "司机·update"
+        },
+        {
+          "code": "driver_delete",
+          "name": "司机·delete"
+        },
+        {
+          "code": "route_list",
+          "name": "配送路线·list"
+        },
+        {
+          "code": "route_get",
+          "name": "配送路线·get"
+        },
+        {
+          "code": "route_create",
+          "name": "配送路线·create"
+        },
+        {
+          "code": "route_update",
+          "name": "配送路线·update"
+        },
+        {
+          "code": "route_delete",
+          "name": "配送路线·delete"
+        },
+        {
+          "code": "route_bind_list",
+          "name": "路线绑定·list"
+        },
+        {
+          "code": "route_bind_get",
+          "name": "路线绑定·get"
+        },
+        {
+          "code": "route_bind_create",
+          "name": "路线绑定·create"
+        },
+        {
+          "code": "route_bind_update",
+          "name": "路线绑定·update"
+        },
+        {
+          "code": "route_bind_delete",
+          "name": "路线绑定·delete"
+        },
+        {
+          "code": "gps_device_list",
+          "name": "GPS 设备·list"
+        },
+        {
+          "code": "gps_device_get",
+          "name": "GPS 设备·get"
+        },
+        {
+          "code": "gps_device_create",
+          "name": "GPS 设备·create"
+        },
+        {
+          "code": "gps_device_update",
+          "name": "GPS 设备·update"
+        },
+        {
+          "code": "gps_device_delete",
+          "name": "GPS 设备·delete"
+        },
+        {
+          "code": "gps_alarm_list",
+          "name": "GPS 报警·list"
+        },
+        {
+          "code": "gps_alarm_get",
+          "name": "GPS 报警·get"
+        },
+        {
+          "code": "gps_alarm_create",
+          "name": "GPS 报警·create"
+        },
+        {
+          "code": "gps_alarm_update",
+          "name": "GPS 报警·update"
+        },
+        {
+          "code": "gps_alarm_delete",
+          "name": "GPS 报警·delete"
+        },
+        {
+          "code": "delivery_record_list",
+          "name": "配送执行记录·list"
+        },
+        {
+          "code": "delivery_record_get",
+          "name": "配送执行记录·get"
+        },
+        {
+          "code": "delivery_record_create",
+          "name": "配送执行记录·create"
+        },
+        {
+          "code": "delivery_record_update",
+          "name": "配送执行记录·update"
+        },
+        {
+          "code": "delivery_record_delete",
+          "name": "配送执行记录·delete"
+        }
+      ]
+    },
+    {
+      "code": "settlement",
+      "name": "结算管理",
+      "domain": "settlement",
+      "functions": [
+        {
+          "code": "settle_sheet_confirm",
+          "name": "对账单确认"
+        },
+        {
+          "code": "settle_sheet_list",
+          "name": "对账单·list"
+        },
+        {
+          "code": "settle_sheet_get",
+          "name": "对账单·get"
+        },
+        {
+          "code": "settle_sheet_create",
+          "name": "对账单·create"
+        },
+        {
+          "code": "settle_sheet_update",
+          "name": "对账单·update"
+        },
+        {
+          "code": "settle_sheet_delete",
+          "name": "对账单·delete"
+        },
+        {
+          "code": "settle_item_list",
+          "name": "对账明细·list"
+        },
+        {
+          "code": "settle_item_get",
+          "name": "对账明细·get"
+        },
+        {
+          "code": "settle_item_create",
+          "name": "对账明细·create"
+        },
+        {
+          "code": "settle_item_update",
+          "name": "对账明细·update"
+        },
+        {
+          "code": "settle_item_delete",
+          "name": "对账明细·delete"
+        },
+        {
+          "code": "payment_record_list",
+          "name": "收款记录·list"
+        },
+        {
+          "code": "payment_record_get",
+          "name": "收款记录·get"
+        },
+        {
+          "code": "payment_record_create",
+          "name": "收款记录·create"
+        },
+        {
+          "code": "payment_record_update",
+          "name": "收款记录·update"
+        },
+        {
+          "code": "payment_record_delete",
+          "name": "收款记录·delete"
+        },
+        {
+          "code": "supplier_payable_list",
+          "name": "供应商应付·list"
+        },
+        {
+          "code": "supplier_payable_get",
+          "name": "供应商应付·get"
+        },
+        {
+          "code": "supplier_payable_create",
+          "name": "供应商应付·create"
+        },
+        {
+          "code": "supplier_payable_update",
+          "name": "供应商应付·update"
+        },
+        {
+          "code": "supplier_payable_delete",
+          "name": "供应商应付·delete"
+        }
+      ]
+    },
+    {
+      "code": "traceability",
+      "name": "溯源管理",
+      "domain": "traceability",
+      "functions": [
+        {
+          "code": "inspect_report_upload",
+          "name": "上传检测报告"
+        },
+        {
+          "code": "trace_batch_entry",
+          "name": "录入批次号"
+        },
+        {
+          "code": "trace_batch_list",
+          "name": "溯源批次·list"
+        },
+        {
+          "code": "trace_batch_get",
+          "name": "溯源批次·get"
+        },
+        {
+          "code": "trace_batch_create",
+          "name": "溯源批次·create"
+        },
+        {
+          "code": "trace_batch_update",
+          "name": "溯源批次·update"
+        },
+        {
+          "code": "trace_batch_delete",
+          "name": "溯源批次·delete"
+        },
+        {
+          "code": "inspect_report_list",
+          "name": "检测报告·list"
+        },
+        {
+          "code": "inspect_report_get",
+          "name": "检测报告·get"
+        },
+        {
+          "code": "inspect_report_create",
+          "name": "检测报告·create"
+        },
+        {
+          "code": "inspect_report_update",
+          "name": "检测报告·update"
+        },
+        {
+          "code": "inspect_report_delete",
+          "name": "检测报告·delete"
+        },
+        {
+          "code": "trace_setting_list",
+          "name": "溯源公开页设置·list"
+        },
+        {
+          "code": "trace_setting_get",
+          "name": "溯源公开页设置·get"
+        },
+        {
+          "code": "trace_setting_create",
+          "name": "溯源公开页设置·create"
+        },
+        {
+          "code": "trace_setting_update",
+          "name": "溯源公开页设置·update"
+        },
+        {
+          "code": "trace_setting_delete",
+          "name": "溯源公开页设置·delete"
+        }
+      ]
+    },
+    {
+      "code": "system_admin",
+      "name": "系统设置",
+      "domain": "system_admin",
+      "functions": [
+        {
+          "code": "admin_user_list",
+          "name": "管理员·list"
+        },
+        {
+          "code": "admin_user_get",
+          "name": "管理员·get"
+        },
+        {
+          "code": "admin_user_create",
+          "name": "管理员·create"
+        },
+        {
+          "code": "admin_user_update",
+          "name": "管理员·update"
+        },
+        {
+          "code": "admin_user_delete",
+          "name": "管理员·delete"
+        },
+        {
+          "code": "sys_module_list",
+          "name": "功能模块·list"
+        },
+        {
+          "code": "sys_module_get",
+          "name": "功能模块·get"
+        },
+        {
+          "code": "sys_module_create",
+          "name": "功能模块·create"
+        },
+        {
+          "code": "sys_module_update",
+          "name": "功能模块·update"
+        },
+        {
+          "code": "sys_module_delete",
+          "name": "功能模块·delete"
+        },
+        {
+          "code": "sys_function_list",
+          "name": "功能点·list"
+        },
+        {
+          "code": "sys_function_get",
+          "name": "功能点·get"
+        },
+        {
+          "code": "sys_function_create",
+          "name": "功能点·create"
+        },
+        {
+          "code": "sys_function_update",
+          "name": "功能点·update"
+        },
+        {
+          "code": "sys_function_delete",
+          "name": "功能点·delete"
+        },
+        {
+          "code": "sys_role_list",
+          "name": "角色·list"
+        },
+        {
+          "code": "sys_role_get",
+          "name": "角色·get"
+        },
+        {
+          "code": "sys_role_create",
+          "name": "角色·create"
+        },
+        {
+          "code": "sys_role_update",
+          "name": "角色·update"
+        },
+        {
+          "code": "sys_role_delete",
+          "name": "角色·delete"
+        },
+        {
+          "code": "sys_role_grant_list",
+          "name": "角色授权·list"
+        },
+        {
+          "code": "sys_role_grant_get",
+          "name": "角色授权·get"
+        },
+        {
+          "code": "sys_role_grant_create",
+          "name": "角色授权·create"
+        },
+        {
+          "code": "sys_role_grant_update",
+          "name": "角色授权·update"
+        },
+        {
+          "code": "sys_role_grant_delete",
+          "name": "角色授权·delete"
+        },
+        {
+          "code": "sys_config_list",
+          "name": "系统参数·list"
+        },
+        {
+          "code": "sys_config_get",
+          "name": "系统参数·get"
+        },
+        {
+          "code": "sys_config_create",
+          "name": "系统参数·create"
+        },
+        {
+          "code": "sys_config_update",
+          "name": "系统参数·update"
+        },
+        {
+          "code": "sys_config_delete",
+          "name": "系统参数·delete"
+        },
+        {
+          "code": "operation_log_list",
+          "name": "操作日志·list"
+        },
+        {
+          "code": "operation_log_get",
+          "name": "操作日志·get"
+        },
+        {
+          "code": "operation_log_create",
+          "name": "操作日志·create"
+        },
+        {
+          "code": "operation_log_update",
+          "name": "操作日志·update"
+        },
+        {
+          "code": "operation_log_delete",
+          "name": "操作日志·delete"
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "code": "sys_admin",
+      "name": "系统管理员",
+      "description": "全部模块"
+    },
+    {
+      "code": "purchase_manager",
+      "name": "采购主管",
+      "description": "采购全流程 + 商品档案"
+    },
+    {
+      "code": "purchase_clerk",
+      "name": "采购文员",
+      "description": "导单与任务发布，不含报价审核与删除权"
+    },
+    {
+      "code": "sorter",
+      "name": "分拣员",
+      "description": "订单查看与分拣"
+    },
+    {
+      "code": "warehouse_keeper",
+      "name": "仓库管理员",
+      "description": "出入库与盘点"
+    },
+    {
+      "code": "dispatcher",
+      "name": "配送调度",
+      "description": "路线排班与 GPS 监控"
+    },
+    {
+      "code": "finance",
+      "name": "财务",
+      "description": "对账与收款、单据审核"
+    },
+    {
+      "code": "trace_clerk",
+      "name": "溯源录入员",
+      "description": "批次与检测报告录入"
+    },
+    {
+      "code": "ops_viewer",
+      "name": "运营查看",
+      "description": "只读驾驶舱视角"
+    }
+  ]
+}

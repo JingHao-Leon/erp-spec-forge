@@ -1,0 +1,83 @@
+domain: inventory
+name: 库存管理
+description: 入库、出库、盘点、报损与库存调整。
+entities:
+  - name: warehouse
+    display: 仓库
+    fields:
+      - {name: id, type: pk}
+      - {name: name, type: string, required: true, length: 64}
+      - {name: address, type: string, length: 255}
+      - {name: status, type: enum, values: [normal, stopped], default: normal}
+
+  - name: stock_in
+    display: 入库单
+    fields:
+      - {name: id, type: pk}
+      - {name: in_no, type: string, required: true, length: 32}
+      - {name: warehouse_id, type: fk, target: warehouse, required: true}
+      - {name: supplier_id, type: fk, target: supplier, comment: 采购入库时的供应商}
+      - {name: in_type, type: enum, values: [purchase, return, adjust, other], default: purchase}
+      - {name: status, type: enum, values: [draft, pending_review, posted, rejected], default: draft}
+      - {name: total_amount, type: decimal, precision: "12,2", default: 0}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: stock_in_item
+    display: 入库明细
+    fields:
+      - {name: id, type: pk}
+      - {name: stock_in_id, type: fk, target: stock_in, required: true}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: qty, type: decimal, precision: "12,2", required: true}
+      - {name: price, type: decimal, precision: "12,2", required: true}
+      - {name: batch_no, type: string, length: 64, comment: 关联溯源批次号}
+
+  - name: stock_out
+    display: 出库单
+    fields:
+      - {name: id, type: pk}
+      - {name: out_no, type: string, required: true, length: 32}
+      - {name: warehouse_id, type: fk, target: warehouse, required: true}
+      - {name: customer_id, type: fk, target: customer, comment: 销售出库时的客户}
+      - {name: out_type, type: enum, values: [sale, purchase_return, adjust, other], default: sale}
+      - {name: status, type: enum, values: [draft, pending_review, posted, rejected], default: draft}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: stock_out_item
+    display: 出库明细
+    fields:
+      - {name: id, type: pk}
+      - {name: stock_out_id, type: fk, target: stock_out, required: true}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: qty, type: decimal, precision: "12,2", required: true}
+      - {name: price, type: decimal, precision: "12,2", required: true}
+      - {name: batch_no, type: string, length: 64}
+
+  - name: stocktake
+    display: 盘点单
+    fields:
+      - {name: id, type: pk}
+      - {name: warehouse_id, type: fk, target: warehouse, required: true}
+      - {name: take_date, type: date, required: true}
+      - {name: status, type: enum, values: [draft, counting, submitted, posted], default: draft}
+
+  - name: stocktake_item
+    display: 盘点明细
+    fields:
+      - {name: id, type: pk}
+      - {name: stocktake_id, type: fk, target: stocktake, required: true}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: book_qty, type: decimal, precision: "12,2", comment: 账面数量}
+      - {name: actual_qty, type: decimal, precision: "12,2", comment: 实盘数量}
+
+  - name: stock_adjust
+    display: 库存调整
+    fields:
+      - {name: id, type: pk}
+      - {name: adjust_no, type: string, required: true, length: 32}
+      - {name: warehouse_id, type: fk, target: warehouse, required: true}
+      - {name: adjust_type, type: enum, values: [loss, waste, gain], default: loss, comment: 报损/损耗/盘盈}
+      - {name: reason, type: string, length: 255}
+      - {name: status, type: enum, values: [draft, posted], default: draft}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: qty, type: decimal, precision: "12,2", required: true}

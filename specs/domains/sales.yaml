@@ -1,0 +1,47 @@
+domain: sales
+name: 销售管理
+description: B2B 客户档案与销售订单。
+entities:
+  - name: customer
+    display: 客户
+    fields:
+      - {name: id, type: pk}
+      - {name: code, type: string, required: true, length: 32, comment: 客户编号，如 C000000001}
+      - {name: external_code, type: string, length: 64, comment: 外部平台客户编号（同步用）}
+      - {name: name, type: string, required: true, length: 128, comment: 客户名称}
+      - {name: client_type, type: enum, values: [company, retail], default: company, comment: 企业客户/零售客户}
+      - {name: contact_name, type: string, length: 64}
+      - {name: contact_phone, type: string, length: 32}
+      - {name: address, type: string, length: 255, comment: 收货地址}
+      - {name: region_id, type: fk, target: region}
+      - {name: pay_type, type: enum, values: [pay_first, pay_later], default: pay_later, comment: 先款/先货}
+      - {name: pay_cycle, type: enum, values: [day, week, month], default: month}
+      - {name: account_manager, type: string, length: 64, comment: 客户经理}
+      - {name: api_key, type: string, length: 64, comment: 对外下单 API 凭证}
+      - {name: status, type: enum, values: [normal, locked], default: normal}
+      - {name: remark, type: string, length: 255}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: sales_order
+    display: 销售订单
+    fields:
+      - {name: id, type: pk}
+      - {name: order_no, type: string, required: true, length: 32, comment: 订单号}
+      - {name: customer_id, type: fk, target: customer, required: true}
+      - {name: delivery_date, type: date, required: true, comment: 配送日期}
+      - {name: total_amount, type: decimal, precision: "12,2", default: 0}
+      - {name: source, type: enum, values: [manual, api, miniapp, import], default: manual, comment: 订单来源}
+      - {name: status, type: enum, values: [draft, confirmed, sorting, delivering, signed, cancelled], default: draft, comment: 生命周期见 workflow}
+      - {name: remark, type: string, length: 255}
+      - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
+
+  - name: sales_order_item
+    display: 订单明细
+    fields:
+      - {name: id, type: pk}
+      - {name: order_id, type: fk, target: sales_order, required: true}
+      - {name: goods_id, type: fk, target: goods, required: true}
+      - {name: qty, type: decimal, precision: "12,2", required: true}
+      - {name: price, type: decimal, precision: "12,2", required: true}
+      - {name: process_requirement, type: string, length: 255, comment: 加工要求，如 去皮/切块}
+      - {name: item_remark, type: string, length: 255}

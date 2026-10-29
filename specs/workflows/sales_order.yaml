@@ -1,0 +1,18 @@
+workflow: sales_order_lifecycle
+entity: sales_order
+display: 销售订单生命周期
+initial: draft
+states:
+  - {name: draft, display: 草稿}
+  - {name: confirmed, display: 已审核}
+  - {name: sorting, display: 分拣中}
+  - {name: delivering, display: 配送中}
+  - {name: signed, display: 已签收, final: true}
+  - {name: cancelled, display: 已取消, final: true}
+transitions:
+  - {from: draft, to: confirmed, event: audit, role: finance}
+  - {from: confirmed, to: sorting, event: start_sorting}
+  - {from: sorting, to: delivering, event: deliver}
+  - {from: delivering, to: signed, event: sign}
+  - {from: draft, to: cancelled, event: cancel}
+  - {from: confirmed, to: cancelled, event: cancel, role: finance}
