@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-339933?logo=python&logoColor=white)](pyproject.toml)
 [![Spec v0.1](https://img.shields.io/badge/Spec-v0.1-blueviolet)](docs/spec-grammar.md)
-[![Tests](https://img.shields.io/badge/Tests-26%20passed-success)](#本地验证)
+[![Tests](https://img.shields.io/badge/Tests-33%20passed-success)](#本地验证)
 
 </div>
 
@@ -94,6 +94,14 @@ transitions:
 
 领域模型提炼自真实生鲜供应链 ERP 的通用形态，全部为原创泛化设计，不含任何特定系统的私有数据。
 
+## 从真实系统蒸馏的模式
+
+本库的领域模型与工程约定来自对**两套真实生产系统**（一套传统单体 ERP 与一套主流生鲜供应链 SaaS）的授权逆向分析，全部匿名化与泛化后沉淀为三类资产：
+
+- [领域结构模式](docs/patterns/domain-lessons.md) — 模块注册表、主数据锁定三件套、生效日期比例分配、双轨同步键……以及它们如何变成 `lockable` / `auditable` 开关与 `external_code` 字段
+- [API 命名约定](docs/patterns/api-conventions.md) — 动词功能码与 REST 路径的同构表、统一响应包络、CRUD 之外的四大端点族（状态切换/导入导出/字典/备注）
+- [安全加固清单](docs/patterns/security-hardening.md) — 真实部署踩过的 10 类反模式（明文凭据、仅前端权限过滤、验证码策略裸奔期……）与规格层解法
+
 ## 它如何被使用
 
 ```text
@@ -112,7 +120,7 @@ specs/*.yaml ──► erp-spec-forge validate ──► 门禁通过
 ```bash
 pip install -e ".[dev]"
 pytest -q
-# 26 passed in 0.42s（Python 3.13；断言见 tests/：46 实体、92 路径、230 操作、242 功能码等）
+# 33 passed in 0.45s（Python 3.13；断言见 tests/：46 实体、92 路径、230 操作、242 功能码、开关注入等）
 ```
 
 ## Limitations / 局限

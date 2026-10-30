@@ -78,15 +78,16 @@
 |---|---|---|---|---|
 | `id` | PK·bigint | 否 |  |  |
 | `name` | varchar(128) | 是 |  | 供应商名称 |
+| `external_code` | varchar(64) | 否 |  | 外部平台编号（双轨同步用） |
 | `contact_name` | varchar(64) | 否 |  |  |
 | `contact_phone` | varchar(32) | 否 |  |  |
 | `address` | varchar(255) | 否 |  |  |
 | `settle_type` | enum：month/half_month/cash | 否 | month | 结算周期 |
-| `status` | enum：normal/locked | 否 | normal | 启用/禁用 |
-| `lock_operator` | varchar(64) | 否 |  | 禁用操作人 |
-| `lock_time` | datetime | 否 |  | 禁用时间 |
 | `remark` | varchar(255) | 否 |  |  |
 | `created_at` | datetime | 否 | CURRENT_TIMESTAMP |  |
+| `status` | enum：normal/locked | 否 | normal | 状态（lockable 自动派生） |
+| `lock_operator` | varchar(64) | 否 |  | 禁用操作人（lockable 自动派生） |
+| `lock_time` | datetime | 否 |  | 禁用时间（lockable 自动派生） |
 
 ### 采购员 `buyer`
 
@@ -96,7 +97,9 @@
 | `name` | varchar(64) | 是 |  |  |
 | `phone` | varchar(32) | 否 |  |  |
 | `group_tag` | enum：fresh/dry | 否 | fresh | 生鲜组/干货组 |
-| `status` | enum：normal/locked | 否 | normal |  |
+| `status` | enum：normal/locked | 否 | normal | 状态（lockable 自动派生） |
+| `lock_operator` | varchar(64) | 否 |  | 禁用操作人（lockable 自动派生） |
+| `lock_time` | datetime | 否 |  | 禁用时间（lockable 自动派生） |
 
 ### 供应商-商品绑定 `supplier_goods`
 
@@ -140,6 +143,8 @@
 | `released_by` | varchar(64) | 否 |  |  |
 | `remark` | varchar(255) | 否 |  |  |
 | `created_at` | datetime | 否 | CURRENT_TIMESTAMP |  |
+| `created_by` | varchar(64) | 否 |  | 创建人（auditable 自动派生） |
+| `updated_at` | datetime | 否 |  | 更新时间（auditable 自动派生） |
 
 ### 采购任务明细 `purchase_task_item`
 
@@ -185,9 +190,11 @@ B2B 客户档案与销售订单。
 | `pay_cycle` | enum：day/week/month | 否 | month |  |
 | `account_manager` | varchar(64) | 否 |  | 客户经理 |
 | `api_key` | varchar(64) | 否 |  | 对外下单 API 凭证 |
-| `status` | enum：normal/locked | 否 | normal |  |
 | `remark` | varchar(255) | 否 |  |  |
 | `created_at` | datetime | 否 | CURRENT_TIMESTAMP |  |
+| `status` | enum：normal/locked | 否 | normal | 状态（lockable 自动派生） |
+| `lock_operator` | varchar(64) | 否 |  | 禁用操作人（lockable 自动派生） |
+| `lock_time` | datetime | 否 |  | 禁用时间（lockable 自动派生） |
 
 ### 销售订单 `sales_order`
 
@@ -202,6 +209,8 @@ B2B 客户档案与销售订单。
 | `status` | enum：draft/confirmed/sorting/delivering/signed/cancelled | 否 | draft | 生命周期见 workflow |
 | `remark` | varchar(255) | 否 |  |  |
 | `created_at` | datetime | 否 | CURRENT_TIMESTAMP |  |
+| `created_by` | varchar(64) | 否 |  | 创建人（auditable 自动派生） |
+| `updated_at` | datetime | 否 |  | 更新时间（auditable 自动派生） |
 
 ### 订单明细 `sales_order_item`
 
@@ -226,7 +235,9 @@ B2B 客户档案与销售订单。
 | `id` | PK·bigint | 否 |  |  |
 | `name` | varchar(64) | 是 |  |  |
 | `address` | varchar(255) | 否 |  |  |
-| `status` | enum：normal/stopped | 否 | normal |  |
+| `status` | enum：normal/locked | 否 | normal | 状态（lockable 自动派生） |
+| `lock_operator` | varchar(64) | 否 |  | 禁用操作人（lockable 自动派生） |
+| `lock_time` | datetime | 否 |  | 禁用时间（lockable 自动派生） |
 
 ### 入库单 `stock_in`
 
@@ -240,6 +251,8 @@ B2B 客户档案与销售订单。
 | `status` | enum：draft/pending_review/posted/rejected | 否 | draft |  |
 | `total_amount` | decimal(12,2) | 否 | 0 |  |
 | `created_at` | datetime | 否 | CURRENT_TIMESTAMP |  |
+| `created_by` | varchar(64) | 否 |  | 创建人（auditable 自动派生） |
+| `updated_at` | datetime | 否 |  | 更新时间（auditable 自动派生） |
 
 ### 入库明细 `stock_in_item`
 
@@ -263,6 +276,8 @@ B2B 客户档案与销售订单。
 | `out_type` | enum：sale/purchase_return/adjust/other | 否 | sale |  |
 | `status` | enum：draft/pending_review/posted/rejected | 否 | draft |  |
 | `created_at` | datetime | 否 | CURRENT_TIMESTAMP |  |
+| `created_by` | varchar(64) | 否 |  | 创建人（auditable 自动派生） |
+| `updated_at` | datetime | 否 |  | 更新时间（auditable 自动派生） |
 
 ### 出库明细 `stock_out_item`
 
@@ -318,7 +333,9 @@ B2B 客户档案与销售订单。
 | `id` | PK·bigint | 否 |  |  |
 | `name` | varchar(128) | 是 |  |  |
 | `phone` | varchar(32) | 否 |  |  |
-| `status` | enum：normal/locked | 否 | normal |  |
+| `status` | enum：normal/locked | 否 | normal | 状态（lockable 自动派生） |
+| `lock_operator` | varchar(64) | 否 |  | 禁用操作人（lockable 自动派生） |
+| `lock_time` | datetime | 否 |  | 禁用时间（lockable 自动派生） |
 
 ### 司机 `driver`
 
@@ -329,7 +346,9 @@ B2B 客户档案与销售订单。
 | `phone` | varchar(32) | 是 |  |  |
 | `carrier_id` | FK·bigint→carrier | 是 |  |  |
 | `id_card_no` | varchar(32) | 否 |  | 身份证号（加密存储） |
-| `status` | enum：normal/locked | 否 | normal |  |
+| `status` | enum：normal/locked | 否 | normal | 状态（lockable 自动派生） |
+| `lock_operator` | varchar(64) | 否 |  | 禁用操作人（lockable 自动派生） |
+| `lock_time` | datetime | 否 |  | 禁用时间（lockable 自动派生） |
 
 ### 配送路线 `route`
 
@@ -403,6 +422,9 @@ B2B 客户档案与销售订单。
 | `period_end` | date | 是 |  | 账期止 |
 | `total_amount` | decimal(12,2) | 否 | 0 |  |
 | `status` | enum：draft/confirmed/partial_paid/paid | 否 | draft |  |
+| `created_at` | datetime | 否 | CURRENT_TIMESTAMP | 创建时间（auditable 自动派生） |
+| `created_by` | varchar(64) | 否 |  | 创建人（auditable 自动派生） |
+| `updated_at` | datetime | 否 |  | 更新时间（auditable 自动派生） |
 
 ### 对账明细 `settle_item`
 

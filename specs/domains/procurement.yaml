@@ -4,27 +4,26 @@ description: 供应商、采购员、报价与采购任务/单据的完整采购
 entities:
   - name: supplier
     display: 供应商
+    lockable: true
     fields:
       - {name: id, type: pk}
       - {name: name, type: string, required: true, length: 128, comment: 供应商名称}
+      - {name: external_code, type: string, length: 64, comment: 外部平台编号（双轨同步用）}
       - {name: contact_name, type: string, length: 64}
       - {name: contact_phone, type: string, length: 32}
       - {name: address, type: string, length: 255}
       - {name: settle_type, type: enum, values: [month, half_month, cash], default: month, comment: 结算周期}
-      - {name: status, type: enum, values: [normal, locked], default: normal, comment: 启用/禁用}
-      - {name: lock_operator, type: string, length: 64, comment: 禁用操作人}
-      - {name: lock_time, type: datetime, comment: 禁用时间}
       - {name: remark, type: string, length: 255}
       - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
 
   - name: buyer
     display: 采购员
+    lockable: true
     fields:
       - {name: id, type: pk}
       - {name: name, type: string, required: true, length: 64}
       - {name: phone, type: string, length: 32}
       - {name: group_tag, type: enum, values: [fresh, dry], default: fresh, comment: 生鲜组/干货组}
-      - {name: status, type: enum, values: [normal, locked], default: normal}
 
   - name: supplier_goods
     display: 供应商-商品绑定
@@ -54,6 +53,7 @@ entities:
 
   - name: purchase_task
     display: 采购任务
+    auditable: true
     fields:
       - {name: id, type: pk}
       - {name: task_no, type: string, required: true, length: 32, comment: 任务单号}

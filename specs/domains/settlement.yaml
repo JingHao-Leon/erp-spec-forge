@@ -4,6 +4,7 @@ description: 客户对账单、收款与供应商应付。
 entities:
   - name: settle_sheet
     display: 对账单
+    auditable: true
     fields:
       - {name: id, type: pk}
       - {name: sheet_no, type: string, required: true, length: 32}

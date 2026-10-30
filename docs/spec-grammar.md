@@ -44,6 +44,15 @@ specs/
 | `precision` | decimal | 形如 `"12,2"` |
 | `comment` | 全部 | 说明，进入 SQL 注释与数据字典 |
 
+### 实体级约定开关（v0.1.1 新增）
+
+| 开关 | 自动注入字段（已手写的同名字段跳过） |
+|---|---|
+| `lockable: true` | `status`(enum normal/locked) + `lock_operator` + `lock_time` —— 主数据"锁定三件套" |
+| `auditable: true` | `created_at`(默认 CURRENT_TIMESTAMP) + `created_by` + `updated_at` |
+
+双轨系统同步约定：与外部平台对接的客户/供应商建议声明 `external_code` 字段（string 64），作为跨系统同步键。
+
 校验规则：实体名/字段名 snake_case 且唯一；每个实体恰有一个 `pk`；`fk.target` 必须存在；`enum.values` 非空且 `default` 必须在取值内；状态机初始态可达、无死端。
 
 ## 3. RBAC `rbac.yaml`

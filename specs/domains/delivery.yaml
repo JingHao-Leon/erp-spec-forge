@@ -4,21 +4,21 @@ description: 路线、承运商、司机、GPS 冷链设备与配送执行记录
 entities:
   - name: carrier
     display: 承运商
+    lockable: true
     fields:
       - {name: id, type: pk}
       - {name: name, type: string, required: true, length: 128}
       - {name: phone, type: string, length: 32}
-      - {name: status, type: enum, values: [normal, locked], default: normal}
 
   - name: driver
     display: 司机
+    lockable: true
     fields:
       - {name: id, type: pk}
       - {name: name, type: string, required: true, length: 64}
       - {name: phone, type: string, required: true, length: 32}
       - {name: carrier_id, type: fk, target: carrier, required: true}
       - {name: id_card_no, type: string, length: 32, comment: 身份证号（加密存储）}
-      - {name: status, type: enum, values: [normal, locked], default: normal}
 
   - name: route
     display: 配送路线

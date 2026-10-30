@@ -1,7 +1,7 @@
 {
   "system": "fresh-supply-erp",
   "display": "生鲜供应链 ERP（示例规格）",
-  "spec_version": "0.1.0",
+  "spec_version": "0.1.1",
   "modules": [
     {
       "code": "base_data",

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "erp-spec-forge"
-version = "0.1.0"
+version = "0.1.1"
 description = "Spec-driven design toolkit: describe an ERP in YAML, generate SQL DDL, OpenAPI, RBAC matrix and module registry"
 readme = "README.md"
 requires-python = ">=3.10"

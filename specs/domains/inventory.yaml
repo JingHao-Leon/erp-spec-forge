@@ -4,14 +4,15 @@ description: 入库、出库、盘点、报损与库存调整。
 entities:
   - name: warehouse
     display: 仓库
+    lockable: true
     fields:
       - {name: id, type: pk}
       - {name: name, type: string, required: true, length: 64}
       - {name: address, type: string, length: 255}
-      - {name: status, type: enum, values: [normal, stopped], default: normal}
 
   - name: stock_in
     display: 入库单
+    auditable: true
     fields:
       - {name: id, type: pk}
       - {name: in_no, type: string, required: true, length: 32}
@@ -34,6 +35,7 @@ entities:
 
   - name: stock_out
     display: 出库单
+    auditable: true
     fields:
       - {name: id, type: pk}
       - {name: out_no, type: string, required: true, length: 32}

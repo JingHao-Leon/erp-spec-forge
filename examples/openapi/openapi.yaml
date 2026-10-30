@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: 生鲜供应链 ERP（示例规格） API
-  version: 0.1.0
+  version: 0.1.1
   description: 以 YAML 规格驱动建模的生鲜供应链 ERP：基础主数据、采购、销售、库存、配送、结算、溯源与系统管理八大领域。
 paths:
   /goods_categorys:
@@ -7512,6 +7512,9 @@ components:
         name:
           type: string
           description: 供应商名称
+        external_code:
+          type: string
+          description: 外部平台编号（双轨同步用）
         contact_name:
           type: string
         contact_phone:
@@ -7525,24 +7528,24 @@ components:
           - half_month
           - cash
           description: 结算周期
-        status:
-          type: string
-          enum:
-          - normal
-          - locked
-          description: 启用/禁用
-        lock_operator:
-          type: string
-          description: 禁用操作人
-        lock_time:
-          type: string
-          format: date-time
-          description: 禁用时间
         remark:
           type: string
         created_at:
           type: string
           format: date-time
+        status:
+          type: string
+          enum:
+          - normal
+          - locked
+          description: 状态（lockable 自动派生）
+        lock_operator:
+          type: string
+          description: 禁用操作人（lockable 自动派生）
+        lock_time:
+          type: string
+          format: date-time
+          description: 禁用时间（lockable 自动派生）
       required:
       - name
     buyer:
@@ -7566,6 +7569,14 @@ components:
           enum:
           - normal
           - locked
+          description: 状态（lockable 自动派生）
+        lock_operator:
+          type: string
+          description: 禁用操作人（lockable 自动派生）
+        lock_time:
+          type: string
+          format: date-time
+          description: 禁用时间（lockable 自动派生）
       required:
       - name
     supplier_goods:
@@ -7675,6 +7686,13 @@ components:
         created_at:
           type: string
           format: date-time
+        created_by:
+          type: string
+          description: 创建人（auditable 自动派生）
+        updated_at:
+          type: string
+          format: date-time
+          description: 更新时间（auditable 自动派生）
       required:
       - task_no
       - delivery_date
@@ -7786,16 +7804,24 @@ components:
         api_key:
           type: string
           description: 对外下单 API 凭证
-        status:
-          type: string
-          enum:
-          - normal
-          - locked
         remark:
           type: string
         created_at:
           type: string
           format: date-time
+        status:
+          type: string
+          enum:
+          - normal
+          - locked
+          description: 状态（lockable 自动派生）
+        lock_operator:
+          type: string
+          description: 禁用操作人（lockable 自动派生）
+        lock_time:
+          type: string
+          format: date-time
+          description: 禁用时间（lockable 自动派生）
       required:
       - code
       - name
@@ -7841,6 +7867,13 @@ components:
         created_at:
           type: string
           format: date-time
+        created_by:
+          type: string
+          description: 创建人（auditable 自动派生）
+        updated_at:
+          type: string
+          format: date-time
+          description: 更新时间（auditable 自动派生）
       required:
       - order_no
       - customer_id
@@ -7887,7 +7920,15 @@ components:
           type: string
           enum:
           - normal
-          - stopped
+          - locked
+          description: 状态（lockable 自动派生）
+        lock_operator:
+          type: string
+          description: 禁用操作人（lockable 自动派生）
+        lock_time:
+          type: string
+          format: date-time
+          description: 禁用时间（lockable 自动派生）
       required:
       - name
     stock_in:
@@ -7925,6 +7966,13 @@ components:
         created_at:
           type: string
           format: date-time
+        created_by:
+          type: string
+          description: 创建人（auditable 自动派生）
+        updated_at:
+          type: string
+          format: date-time
+          description: 更新时间（auditable 自动派生）
       required:
       - in_no
       - warehouse_id
@@ -7986,6 +8034,13 @@ components:
         created_at:
           type: string
           format: date-time
+        created_by:
+          type: string
+          description: 创建人（auditable 自动派生）
+        updated_at:
+          type: string
+          format: date-time
+          description: 更新时间（auditable 自动派生）
       required:
       - out_no
       - warehouse_id
@@ -8110,6 +8165,14 @@ components:
           enum:
           - normal
           - locked
+          description: 状态（lockable 自动派生）
+        lock_operator:
+          type: string
+          description: 禁用操作人（lockable 自动派生）
+        lock_time:
+          type: string
+          format: date-time
+          description: 禁用时间（lockable 自动派生）
       required:
       - name
     driver:
@@ -8133,6 +8196,14 @@ components:
           enum:
           - normal
           - locked
+          description: 状态（lockable 自动派生）
+        lock_operator:
+          type: string
+          description: 禁用操作人（lockable 自动派生）
+        lock_time:
+          type: string
+          format: date-time
+          description: 禁用时间（lockable 自动派生）
       required:
       - name
       - phone
@@ -8314,6 +8385,17 @@ components:
           - confirmed
           - partial_paid
           - paid
+        created_at:
+          type: string
+          format: date-time
+          description: 创建时间（auditable 自动派生）
+        created_by:
+          type: string
+          description: 创建人（auditable 自动派生）
+        updated_at:
+          type: string
+          format: date-time
+          description: 更新时间（auditable 自动派生）
       required:
       - sheet_no
       - customer_id

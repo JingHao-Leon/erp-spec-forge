@@ -31,6 +31,8 @@ class Entity:
     domain: str
     fields: list[Field]
     comment: str = ""
+    lockable: bool = False
+    auditable: bool = False
 
 
 @dataclass
@@ -114,13 +116,44 @@ def _field(raw: dict) -> Field:
     return f
 
 
+def _expand_flags(e: Entity) -> Entity:
+    """Inject convention fields for entity-level switches (lockable / auditable).
+
+    Hand-written fields with the same name win; only missing ones are appended.
+    """
+    names = {f.name for f in e.fields}
+    if e.lockable:
+        for f in (
+            Field(name="status", type="enum", values=["normal", "locked"], default="normal", comment="状态（lockable 自动派生）"),
+            Field(name="lock_operator", type="string", length=64, comment="禁用操作人（lockable 自动派生）"),
+            Field(name="lock_time", type="datetime", comment="禁用时间（lockable 自动派生）"),
+        ):
+            if f.name not in names:
+                e.fields.append(f)
+                names.add(f.name)
+    if e.auditable:
+        for f in (
+            Field(name="created_at", type="datetime", default="CURRENT_TIMESTAMP", comment="创建时间（auditable 自动派生）"),
+            Field(name="created_by", type="string", length=64, comment="创建人（auditable 自动派生）"),
+            Field(name="updated_at", type="datetime", comment="更新时间（auditable 自动派生）"),
+        ):
+            if f.name not in names:
+                e.fields.append(f)
+                names.add(f.name)
+    return e
+
+
 def _entity(raw: dict, domain: str) -> Entity:
-    return Entity(
-        name=str(raw["name"]),
-        display=str(raw.get("display", raw["name"])),
-        domain=domain,
-        fields=[_field(f) for f in raw.get("fields", [])],
-        comment=str(raw.get("comment", "")),
+    return _expand_flags(
+        Entity(
+            name=str(raw["name"]),
+            display=str(raw.get("display", raw["name"])),
+            domain=domain,
+            fields=[_field(f) for f in raw.get("fields", [])],
+            comment=str(raw.get("comment", "")),
+            lockable=bool(raw.get("lockable", False)),
+            auditable=bool(raw.get("auditable", False)),
+        )
     )
 
 

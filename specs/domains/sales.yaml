@@ -4,6 +4,7 @@ description: B2B 客户档案与销售订单。
 entities:
   - name: customer
     display: 客户
+    lockable: true
     fields:
       - {name: id, type: pk}
       - {name: code, type: string, required: true, length: 32, comment: 客户编号，如 C000000001}
@@ -18,12 +19,12 @@ entities:
       - {name: pay_cycle, type: enum, values: [day, week, month], default: month}
       - {name: account_manager, type: string, length: 64, comment: 客户经理}
       - {name: api_key, type: string, length: 64, comment: 对外下单 API 凭证}
-      - {name: status, type: enum, values: [normal, locked], default: normal}
       - {name: remark, type: string, length: 255}
       - {name: created_at, type: datetime, default: CURRENT_TIMESTAMP}
 
   - name: sales_order
     display: 销售订单
+    auditable: true
     fields:
       - {name: id, type: pk}
       - {name: order_no, type: string, required: true, length: 32, comment: 订单号}
